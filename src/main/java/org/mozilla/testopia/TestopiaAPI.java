@@ -166,6 +166,11 @@ public class TestopiaAPI implements MiscService,
     public String lookupStatusNameById(Integer statusId) {
         return this.testCaseService.lookupStatusNameById(statusId);
     }
+
+
+    public TestCase createTestCase(TestCase testCase){
+        return this.testCaseService.createTestCase(testCase);
+    }
     /*
      * -------------------------------------------------------------------------
      * Test Plan methods
@@ -178,6 +183,12 @@ public class TestopiaAPI implements MiscService,
     public TestPlan getTestPlan(Integer id) {
         return this.testPlanService.getTestPlan(id);
     }
+
+
+    public TestPlan createTestPlan(TestPlan testPlan){
+        return this.testPlanService.createTestPlan(testPlan);
+    }
+
     /*
      * -------------------------------------------------------------------------
      * Test Run methods

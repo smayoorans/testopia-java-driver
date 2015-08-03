@@ -38,4 +38,6 @@ public interface TestPlanService {
      * @return TestPlan
      */
     TestPlan getTestPlan(Integer id);
+
+    TestPlan createTestPlan(TestPlan testPlan);
 }

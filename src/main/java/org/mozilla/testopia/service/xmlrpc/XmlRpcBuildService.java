@@ -76,8 +76,23 @@ public class XmlRpcBuildService implements BuildService {
      */
     public Build create(String product, String name, String milestone,
                         String description, Boolean isActive) {
-        // TODO Auto-generated method stub
-        return null;
+        Build build = null;
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("product", product);
+        map.put("name", name);
+//        map.put("milestone", milestone);
+        map.put("description", description);
+        map.put("isactive", 1);
+        try {
+            Map<String, Object> r = (Map<String, Object>)this.client.execute("Build.create", new Object[]{map});
+            build = new Build(Integer.parseInt(r.get("build_id").toString()), ""+r.get("name"), ""+r.get("milestone"), ""+r.get("description"), Boolean.parseBoolean(""+r.get("isactive")));
+            /*
+             *  (java.util.HashMap<K,V>) {milestone=---, isactive=1, product_id=3, description=Sample build, name=My build, build_id=1}
+             */
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        return build;
     }
     /**
      * {@inheritDoc}

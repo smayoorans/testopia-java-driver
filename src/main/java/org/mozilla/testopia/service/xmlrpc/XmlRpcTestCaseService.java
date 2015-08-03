@@ -23,10 +23,13 @@
  */
 package org.mozilla.testopia.service.xmlrpc;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.xmlrpc.client.XmlRpcClient;
+import org.mozilla.testopia.model.TestCase;
+import org.mozilla.testopia.model.TestPlan;
 import org.mozilla.testopia.service.TestCaseService;
 
 
@@ -67,5 +70,30 @@ public class XmlRpcTestCaseService implements TestCaseService {
         }
         return name;
     }
-    
+
+    @SuppressWarnings("unchecked")
+    public TestCase createTestCase(TestCase testCase) {
+        TestCase testCase1 = new TestCase();
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("summary", testCase.getSummary());
+        map.put("category", testCase.getCategoryId());
+        map.put("product", testCase.getProductId());
+        map.put("priority", testCase.getPriorityId());
+        try {
+            Object r = this.client.execute("TestCase.create", new Object[]{map});
+            System.out.println("............>" + r);
+         /*   testCase1 = new TestCase(Integer.parseInt(""+r.get("case_id")),
+                    Integer.parseInt(""+r.get("status_id")), Integer.parseInt(""+r.get("category_id")), Integer.parseInt(""+r.get("priority_id")),
+                    Integer.parseInt(""+r.get("status_id")), Integer.parseInt(""+r.get("status_id")), null, null, Boolean.FALSE, r.get(""),
+                    ""+r.get("name"), ""+r.get("type"), ""+r.get("default_product_version"),
+                    Boolean.parseBoolean(""+r.get("isactive")));*/
+            /*
+             *  (java.util.HashMap<K,V>) {creation_date=2012-05-29 18:59:18, test_run_count=1, isactive=1, product_id=3, name=my plan, author_id=1, test_case_count=1, default_product_version=unspecified, type_id=5, plan_id=1}
+             */
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        return testCase1;
+    }
+
 }

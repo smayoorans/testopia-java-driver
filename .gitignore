@@ -10,3 +10,7 @@ test-output
 *.jar
 *.war
 *.ear
+
+
+testopia-java-driver.iml
+.idea

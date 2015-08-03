@@ -40,7 +40,7 @@ public class TestPlan implements Serializable {
     private String name;
     private String type;
     private String defaultProductVersion;
-    private Boolean active;
+    private Boolean active = Boolean.FALSE;
     
     /**
      * Default constructor.

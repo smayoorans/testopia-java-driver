@@ -51,7 +51,9 @@ public class TestCase implements Serializable {
     private String summary;
     private String requirement;
     private String alias;
-    
+    private Integer productId;
+    private String actions;
+
     /**
      * Default constructor. 
      */
@@ -310,4 +312,19 @@ public class TestCase implements Serializable {
         this.alias = alias;
     }
 
+    public Integer getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Integer productId) {
+        this.productId = productId;
+    }
+
+    public String getActions() {
+        return actions;
+    }
+
+    public void setActions(String actions) {
+        this.actions = actions;
+    }
 }

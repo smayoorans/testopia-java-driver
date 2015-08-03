@@ -24,6 +24,8 @@
 package org.mozilla.testopia.service;
 
 
+import org.mozilla.testopia.model.TestCase;
+
 /**
  * Service for test cases.
  * @author Bruno P. Kinoshita - http://www.kinoshita.eti.br
@@ -35,4 +37,6 @@ public interface TestCaseService {
      * @return the status name
      */
     String lookupStatusNameById(Integer id);
+
+    TestCase createTestCase(TestCase testCase);
 }

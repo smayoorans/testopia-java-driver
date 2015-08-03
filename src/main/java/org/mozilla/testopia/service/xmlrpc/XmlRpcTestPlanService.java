@@ -70,4 +70,24 @@ public class XmlRpcTestPlanService implements TestPlanService {
         return plan;
     }
 
+    public TestPlan createTestPlan(TestPlan testPlan) {
+        TestPlan plan = null;
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("name", testPlan.getName());
+        map.put("isactive", testPlan.getActive());
+        map.put("default_product_version", testPlan.getDefaultProductVersion());
+        map.put("product", testPlan.getProductId());
+        map.put("type", testPlan.getType());
+        try {
+            Map<String, Object> r = (Map<String, Object>) this.client.execute("TestPlan.create", new Object[]{map});
+            plan = new TestPlan(Integer.parseInt(""+r.get("plan_id")), Integer.parseInt(""+r.get("product_id")), ""+r.get("name"), ""+r.get("type"), ""+r.get("default_product_version"), Boolean.parseBoolean(""+r.get("isactive")));
+            /*
+             *  (java.util.HashMap<K,V>) {creation_date=2012-05-29 18:59:18, test_run_count=1, isactive=1, product_id=3, name=my plan, author_id=1, test_case_count=1, default_product_version=unspecified, type_id=5, plan_id=1}
+             */
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        return plan;
+    }
+
 }

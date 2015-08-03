@@ -23,67 +23,60 @@
  */
 package org.mozilla.testopia.service;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.mozilla.testopia.TestopiaAPI;
-import org.mozilla.testopia.model.Build;
-import org.mozilla.testopia.model.TestRun;
+import org.mozilla.testopia.model.TestCase;
+import org.mozilla.testopia.model.TestPlan;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 
 /**
- * Tests for BuildService.
- * @author Bruno P. Kinoshita - http://www.kinoshita.eti.br
- * @since 0.1
+ * Tests for TestPlanService.
+ * @author Mayooran
  */
 @Ignore("MOCKME!")
-public class TestBuildService {
+public class TestTestCaseService {
 
     private TestopiaAPI api;
+    private static final String USER_NAME = "smayoorans@gmail.com";
+    private static final String PASSWORD = "velanai1987*";
+
     
     @Before
     public void setUp() throws MalformedURLException {
         URL url = new URL("http://localhost/bugzilla/xmlrpc.cgi");
         api = new TestopiaAPI(url);
-        api.login("smayoorans@gmail.com", "velanai1987*");
+        api.login(USER_NAME, PASSWORD);
     }
     
     @Test
-    public void testCheckBuild() {
-        System.out.println("Login " + api.isLoggedIn());
-
-       /* Build builds = api.create("ProductId", "productName", "milestone", "Description", true);
-        System.out.println("Build" + builds);
-*/
-        Build build = api.checkBuild("MyBuild", "TestProduct");
-        assertNotNull(build);
-        assertTrue(build.getId() > 0);
-
-        System.out.println("Get Description " + build.getDescription());
-        System.out.println("Get milestone " + build.getMilestone());
-        System.out.println("Is active " + build.getIsActive());
-
-    }
-
-    @Test
-    public void testCreateBuild() throws Exception {
+    public void testCreateTestCase() {
 
         System.out.println("Login " + api.isLoggedIn());
 
-        Build build = api.create("TestProduct", "MyBuild3", "Milestone", "My build description", Boolean.TRUE);
+        TestCase testCase = new TestCase();
+        testCase.setSummary("This is summary of the testcase.");
+        testCase.setDefaultTesterId(1);
+        testCase.setProductId(1);
+        testCase.setPriorityId(1);
+        testCase.setRequirement("This is requirement");
+        testCase.setActions("This is action of the testcase");
+        testCase.setCategoryId(1);
 
-/*        assertNotNull(build);
-        assertTrue(build.getId() > 0);*/
+        TestCase testPlan1 = api.createTestCase(testCase);
+        assertNotNull(testPlan1);
+        assertTrue(testPlan1.getId() > 0);
 
-        System.out.println("Get Description " + build.getDescription());
-        System.out.println("Get milestone " + build.getMilestone());
-        System.out.println("Is active " + build.getIsActive());
+        System.out.println("Get Description " + testPlan1.getSummary());
 
     }
+
+
 }

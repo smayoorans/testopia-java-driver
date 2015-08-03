@@ -23,67 +23,57 @@
  */
 package org.mozilla.testopia.service;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.mozilla.testopia.TestopiaAPI;
 import org.mozilla.testopia.model.Build;
-import org.mozilla.testopia.model.TestRun;
+import org.mozilla.testopia.model.TestPlan;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 
 /**
- * Tests for BuildService.
- * @author Bruno P. Kinoshita - http://www.kinoshita.eti.br
- * @since 0.1
+ * Tests for TestPlanService.
+ * @author Mayooran
  */
 @Ignore("MOCKME!")
-public class TestBuildService {
+public class TestTestPlanService {
 
     private TestopiaAPI api;
+    private static final String USER_NAME = "smayoorans@gmail.com";
+    private static final String PASSWORD = "velanai1987*";
+
     
     @Before
     public void setUp() throws MalformedURLException {
         URL url = new URL("http://localhost/bugzilla/xmlrpc.cgi");
         api = new TestopiaAPI(url);
-        api.login("smayoorans@gmail.com", "velanai1987*");
+        api.login(USER_NAME, PASSWORD);
     }
     
     @Test
-    public void testCheckBuild() {
-        System.out.println("Login " + api.isLoggedIn());
-
-       /* Build builds = api.create("ProductId", "productName", "milestone", "Description", true);
-        System.out.println("Build" + builds);
-*/
-        Build build = api.checkBuild("MyBuild", "TestProduct");
-        assertNotNull(build);
-        assertTrue(build.getId() > 0);
-
-        System.out.println("Get Description " + build.getDescription());
-        System.out.println("Get milestone " + build.getMilestone());
-        System.out.println("Is active " + build.getIsActive());
-
-    }
-
-    @Test
-    public void testCreateBuild() throws Exception {
+    public void testCreateTestPlan() {
 
         System.out.println("Login " + api.isLoggedIn());
 
-        Build build = api.create("TestProduct", "MyBuild3", "Milestone", "My build description", Boolean.TRUE);
+        TestPlan testPlan = new TestPlan();
+        testPlan.setName("MyTestPlan");
+        testPlan.setProductId(1);
+        testPlan.setDefaultProductVersion("v1-0-b2");
+        testPlan.setType("1");
 
-/*        assertNotNull(build);
-        assertTrue(build.getId() > 0);*/
+        TestPlan testPlan1 = api.createTestPlan(testPlan);
+        assertNotNull(testPlan1);
+        assertTrue(testPlan1.getId() > 0);
 
-        System.out.println("Get Description " + build.getDescription());
-        System.out.println("Get milestone " + build.getMilestone());
-        System.out.println("Is active " + build.getIsActive());
+        System.out.println("Get Description " + testPlan1.getName());
 
     }
+
+
 }
